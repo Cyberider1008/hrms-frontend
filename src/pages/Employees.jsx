@@ -45,10 +45,19 @@ export default function Employees() {
       });
 
       fetchEmployees();
-    } catch (err) {
-      console.log(err.response?.data);
-      alert("Error adding employee");
-    }
+    }catch (err) {
+        const errors = err.response?.data;
+
+        if (errors) {
+            const message = Object.entries(errors)
+            .map(([field, msgs]) => `${field}: ${msgs.join(", ")}`)
+            .join("\n");
+
+            alert(message);
+        } else {
+            alert("Something went wrong");
+        }
+        }
   };
 
   // Delete employee
